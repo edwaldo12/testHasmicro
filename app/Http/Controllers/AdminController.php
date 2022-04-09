@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
@@ -26,7 +27,7 @@ class AdminController extends Controller
      */
     public function create()
     {
-        //
+        return view('users.create');
     }
 
     /**
@@ -37,7 +38,21 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'username' => "required",
+            'email' => "required",
+            'phone' => "required",
+            'password' => "required",
+            'role' => "required",
+        ]);
+
+        $user = new User;
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->password = bcrypt($request->password);
+        Session::flash('store_user', $user->save());
+        return to_route('admin.index');
     }
 
     /**
@@ -61,7 +76,7 @@ class AdminController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        return view('users.edit', compact('user'));
+        return view('users.edit_profile', compact('user'));
     }
 
     /**
@@ -79,11 +94,15 @@ class AdminController extends Controller
             'username' => 'required',
             'email' => 'required|email',
             'telephone' => 'required',
+            'password' => "required",
+            'role' => "required",
         ]);
 
         $user->username = $request->username;
         $user->email = $request->email;
+        $user->password = bcrypt($request->password);
         $user->phone = $request->telephone;
+        $user->role = $request->role;
         Session::flash('update_user', $user->save());
         return redirect()->route('admin.index');
     }

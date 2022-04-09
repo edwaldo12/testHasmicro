@@ -18,8 +18,13 @@
                         <div class="box-header">
                             <h4 class="box-title">Data User</h4>
                         </div>
+                        <div class="box-header">
+                            <button type="button" class="btn btn-success">
+                                <a href="{{ route('admin.create') }}" style="color:white">Tambah</a>
+                            </button>
+                        </div>
                         <div class="box-body">
-                            <table id="table_pengguna" class="table table-bordered compact">
+                            <table id="table_pengguna" class="table-bordered compact table">
                                 <thead>
                                     <tr>
                                         <th>Username</th>
@@ -87,6 +92,12 @@
             alert('User data changed...')
         </script>
     @endif
+    @if (session('store_user') === true)
+        <script>
+            alert('User data added...')
+        </script>
+    @endif
+
     @if (session('destroy_user') === true)
         <script>
             alert('User deleted...')

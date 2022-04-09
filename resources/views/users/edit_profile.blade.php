@@ -42,6 +42,19 @@
                                             <small
                                                 class="text-danger">{{ $errors->first('password') ? $errors->first('password') : 'Kosongkan password jika tidak ingin diubah...' }}</small>
                                         </div>
+                                        <div class="form-group">
+                                            <label for="role">Role</label>
+                                            <select name="role" id="role"
+                                                class="form-control {{ $errors->has('role') ? ' is-invalid' : '' }}">
+                                                <option value="admin"
+                                                    {{ old('role') == 'admin' ? 'selected' : ($user->role == 'admin' ? 'selected' : '') }}>
+                                                    Admin</option>
+                                                <option value="operator"
+                                                    {{ old('role') == 'operator' ? 'selected' : ($user->role == 'operator' ? 'selected' : '') }}>
+                                                    Operator</option>
+                                            </select>
+                                            <small class="text-danger">{{ $errors->first('role') }}</small>
+                                        </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
